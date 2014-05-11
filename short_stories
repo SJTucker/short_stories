@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+
+def menu
+<<EOS
+How would you like to search for short stories?
+1. See a list of all stories
+2. Search by Genre
+3. Search by Title
+4. Search by Author
+5. Search by Decade
+EOS
+end
+
+def get_menu_selection
+  puts menu
+  input = gets
+  return unless input
+  input = input.chomp
+  if input == "1"
+    puts "What story would you like to read?"
+    #method for printing story list by querying db
+  elsif input == "2"
+    puts "What is the genre you would like to search?"
+    #method for printing genres by querying db
+  elsif input == "3"
+    puts "What is the title you would like to search?"
+    #method for taking further input 
+  elsif input == "4"
+    puts "What is the name of the author you would like to search?"
+  elsif input == "5"
+    puts "What is the decade you would like to search?"
+  else
+    puts "'#{input}' is an invalid option. Try again."
+    get_menu_selection
+  end
+
+end
+
+get_menu_selection
