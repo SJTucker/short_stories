@@ -1,6 +1,10 @@
 #!/usr/bin/env ruby
 
 
+require_relative 'models/story'
+require 'csv'
+
+
 def menu
 <<EOS
 How would you like to search for short stories?
@@ -19,6 +23,7 @@ def get_menu_selection
   input = input.chomp
   if input == "1"
     puts "What story would you like to read?"
+    puts Story.find_all
     #method for printing story list by querying db
   elsif input == "2"
     puts "What is the genre you would like to search?"
@@ -37,4 +42,12 @@ def get_menu_selection
 
 end
 
+/def import_stories
+  CSV.open('short_stories.csv', options = Hash.new) do |row|
+    puts(row.inspect)
+    #Story.execute_and_instantiate(row[0], row[1], row[2], row[3], row[4])
+  end
+end/
+
+#import_stories
 get_menu_selection
