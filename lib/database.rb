@@ -1,17 +1,13 @@
 require "sqlite3"
 
 class Database < SQLite3::Database
-  def initialize(database)
-    super(database)
-    self.results_as_hash = true
+  def initialize
   end
 
-  def self.connection(environment)
-    @connection ||= Database.open("../short_story_db.sqlite")
-  end
 
-  def execute(statement, bind_vars = [])
-    Environment.logger.info("Executing: #{statement} with: #{bind_vars}")
-    super(statement, bind_vars)
+  def self.execute(statement, bind_vars = [])
+    db = SQLite3::Database.open "short_story_db.sqlite"
+    db.execute(statement, bind_vars)
+
   end
 end

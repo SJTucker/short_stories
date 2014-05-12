@@ -2,17 +2,21 @@
 
 
 require_relative 'models/story'
-require 'csv'
 
 
 def menu
 <<EOS
+
+--------Menu-----------------------------------
+
 How would you like to search for short stories?
+
 1. See a list of all stories
 2. Search by Genre
-3. Search by Title
-4. Search by Author
-5. Search by Decade
+3. Search by Author
+4. Search by Year
+
+-----------------------------------------------
 EOS
 end
 
@@ -22,19 +26,76 @@ def get_menu_selection
   return unless input
   input = input.chomp
   if input == "1"
-    puts "What story would you like to read?"
-    puts Story.find_all
-    #method for printing story list by querying db
+    puts "\nWhat story would you like to read?\n\n"
+    Story.print_all
+    input = gets
+    input = input.chomp
+    puts "--------"
+    Story.find_story_by_id(input)
+    puts "\n\nWould you like to search for another story? (y/n)\n\n"
+    input = gets
+    input = input.chomp
+    if input == "y"
+      get_menu_selection
+    end
+  
   elsif input == "2"
-    puts "What is the genre you would like to search?"
-    #method for printing genres by querying db
+    puts "\n\nWhat is the genre you would like to search?\n\n"
+    Story.print_genres
+    input = gets
+    input = input.chomp
+    puts "--------"
+    puts "What story would you like to read?\n\n"
+    Story.find_stories_with_search(input, "genre")
+    input = gets
+    input = input.chomp
+    puts "--------"
+    Story.find_story(input)
+    puts "\n\nWould you like to search for another story? (y/n)\n\n"
+    input = gets
+    input = input.chomp
+    if input == "y"
+      get_menu_selection
+    end
+  
   elsif input == "3"
-    puts "What is the title you would like to search?"
-    #method for taking further input 
+    puts "\n\nWhat is the name of the author you would like to search?\n\n"
+    Story.print_authors
+    input = gets
+    input = input.chomp
+    puts "--------"
+    puts "What story would you like to read?\n\n"
+    Story.find_stories_with_search(input, "author")
+    input = gets
+    input = input.chomp
+    puts "--------"
+    Story.find_story(input)
+    puts "\n\nWould you like to search for another story? (y/n)\n\n"
+    input = gets
+    input = input.chomp
+    if input == "y"
+      get_menu_selection
+    end
+  
   elsif input == "4"
-    puts "What is the name of the author you would like to search?"
-  elsif input == "5"
-    puts "What is the decade you would like to search?"
+    puts "\n\nWhat is the year you would like to search?\n\n"
+    Story.print_years
+    input = gets
+    input = input.chomp
+    puts "--------"
+    puts "What story would you like to read?\n\n"
+    Story.find_stories_with_search(input, "year")
+    input = gets
+    input = input.chomp
+    puts "--------"
+    Story.find_story(input)
+    puts "\n\nWould you like to search for another story? (y/n)\n\n"
+    input = gets
+    input = input.chomp
+    if input == "y"
+      get_menu_selection
+    end
+    
   else
     puts "'#{input}' is an invalid option. Try again."
     get_menu_selection
@@ -42,12 +103,4 @@ def get_menu_selection
 
 end
 
-/def import_stories
-  CSV.open('short_stories.csv', options = Hash.new) do |row|
-    puts(row.inspect)
-    #Story.execute_and_instantiate(row[0], row[1], row[2], row[3], row[4])
-  end
-end/
-
-#import_stories
 get_menu_selection
