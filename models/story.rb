@@ -1,12 +1,33 @@
 require_relative '../lib/database'
 
 class Story
+  attr_accessor :title, :genre, :author, :year, :story
 
-  def self.format
-    statement = ".mode line"
-    Database.execute(statement)
+  def initialize(title, genre, author, year, story)
+    @title = title
+    @genre = genre
+    @author = author
+    @year = year
+    @story = story
   end
- 
+
+  def save
+    statement = "INSERT into Stories (title, genre, author, year, story) values (?, ?, ?, ?, ?)"
+    bound_vars = [@title, @genre, @author, @year, @story]
+    Database.execute(statement, bound_vars)
+  end
+
+  def update(id)
+    statement = "UPDATE Stories set title=(?), genre=(?), author=(?), year=(?), story=(?) WHERE id=(?)"
+    bound_vars = [@title, @genre, @author, @year, @story, id]
+    Database.execute(statement, bound_vars)
+  end
+
+  def self.delete(id)
+    statement = "DELETE from Stories WHERE id=?"
+    Database.execute(statement, id)
+  end
+
   def self.print_all
     statement =  "SELECT title, author FROM Stories;"
     stories = Database.execute(statement)

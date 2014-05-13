@@ -15,6 +15,9 @@ How would you like to search for short stories?
 2. Search by Genre
 3. Search by Author
 4. Search by Year
+5. Add your own stupid story
+6. Update your sob story
+7. Delete your bad story
 
 -----------------------------------------------
 EOS
@@ -80,8 +83,7 @@ def get_menu_selection
   elsif input == "4"
     puts "\n\nWhat is the year you would like to search?\n\n"
     Story.print_years
-    input = gets
-    input = input.chomp
+    input = gets.chomp
     puts "--------"
     puts "What story would you like to read?\n\n"
     Story.find_stories_with_search(input, "year")
@@ -95,7 +97,59 @@ def get_menu_selection
     if input == "y"
       get_menu_selection
     end
-    
+
+  elsif input == "5"
+    puts "\n\nWhat is the title of the story you would like to add?\n\n"
+    title = gets.chomp
+    puts "--------"
+    puts "\n\nWhat is the genre of the story you would like to add?\n\n"
+    genre = gets.chomp
+    puts "--------"
+    puts "\n\nWho is the author of the story?\n\n"
+    puts "--------"
+    author = gets.chomp
+    puts "\n\nWhat year was it written?\n\n"
+    puts "--------"
+    year = gets.chomp
+    puts "\n\nWhat's your story?\n\n"
+    puts "--------"
+    story = gets.chomp
+    story = Story.new(title, genre, author, year, story)
+    story.save
+    get_menu_selection
+
+  elsif input == "6"
+    Story.print_all
+    puts "\n\nSelect the number of the story you would like to edit.\n\n"
+    id = gets.chomp
+    puts "--------"
+    puts "\n\nWhat is the title of the story you would like to update?\n\n"
+    title = gets.chomp
+    puts "--------"
+    puts "\n\nWhat is the genre of the story you would like to update?\n\n"
+    genre = gets.chomp
+    puts "--------"
+    puts "\n\nWho is the author of the story?\n\n"
+    puts "--------"
+    author = gets.chomp
+    puts "\n\nWhat year was it written?\n\n"
+    puts "--------"
+    year = gets.chomp
+    puts "\n\nWhat's your story?\n\n"
+    puts "--------"
+    story = gets.chomp
+    updated_story = Story.new(title, genre, author, year, story)
+    updated_story.update(id)
+    get_menu_selection
+
+  elsif input == "7"
+    Story.print_all
+    puts "\n\nSelect the number of the story you would like to delete.\n\n"
+    input = gets.chomp
+    puts "--------"
+    Story.delete(input)
+    get_menu_selection
+
   else
     puts "'#{input}' is an invalid option. Try again."
     get_menu_selection
